@@ -1,0 +1,74 @@
+[
+  {
+    "model": "bookingApp.route",
+    "pk": 1,
+    "fields": {
+      "origin": "Nairobi",
+      "destination": "Nairobi Central",
+      "departure_time": "2025-11-25T08:00:00Z"
+    }
+  },
+  {
+    "model": "bookingApp.route",
+    "pk": 2,
+    "fields": {
+      "origin": "Mombasa",
+      "destination": "Mombasa Central",
+      "departure_time": "2025-11-25T09:00:00Z"
+    }
+  },
+  {
+    "model": "bookingApp.route",
+    "pk": 3,
+    "fields": {
+      "origin": "Kisumu",
+      "destination": "Kisumu Central",
+      "departure_time": "2025-11-25T10:00:00Z"
+    }
+  },
+  {
+    "model": "bookingApp.route",
+    "pk": 4,
+    "fields": {
+      "origin": "Kampala",
+      "destination": "Kampala Central",
+      "departure_time": "2025-11-25T11:00:00Z"
+    }
+  },
+  {
+    "model": "bookingApp.route",
+    "pk": 5,
+    "fields": {
+      "origin": "Dar es Salaam",
+      "destination": "Dar es Salaam Central",
+      "departure_time": "2025-11-25T12:00:00Z"
+    }
+  },
+  {
+    "model": "bookingApp.route",
+    "pk": 6,
+    "fields": {
+      "origin": "Johannesburg",
+      "destination": "Johannesburg Central",
+      "departure_time": "2025-11-25T13:00:00Z"
+    }
+  },
+  {
+    "model": "bookingApp.route",
+    "pk": 7,
+    "fields": {
+      "origin": "Lagos",
+      "destination": "Lagos Central",
+      "departure_time": "2025-11-25T14:00:00Z"
+    }
+  },
+  {
+    "model": "bookingApp.route",
+    "pk": 8,
+    "fields": {
+      "origin": "Accra",
+      "destination": "Accra Central",
+      "departure_time": "2025-11-25T15:00:00Z"
+    }
+  }
+]

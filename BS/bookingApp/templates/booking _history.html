@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Booking History</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg,#6a11cb,#2575fc); margin:0; }
+    nav { background:#007bff; padding:12px; text-align:center; }
+    nav a { color:#fff; margin:0 15px; text-decoration:none; font-weight:bold; }
+    nav a:hover { text-decoration:underline; }
+    .container { width:90%; max-width:1000px; margin:40px auto; background:#fff; padding:25px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+    h2 { text-align:center; margin-bottom:25px; color:#333; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:12px 15px; text-align:left; }
+    th { background:#007bff; color:#fff; }
+    tr:nth-child(even){background:#f9f9f9;}
+    tr:hover{background:#eef;}
+    .status { padding:6px 10px; border-radius:6px; font-weight:bold; color:#fff; }
+    .confirmed{background:#28a745;} .completed{background:#17a2b8;} .cancelled{background:#dc3545;}
+    .btn { padding:6px 12px; background:#007bff; color:#fff; border:none; border-radius:5px; cursor:pointer; text-decoration:none; }
+    .btn:hover{background:#0056b3;}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'schedules' %}">Schedules</a>
+    <a href="{% url 'seat_selection' %}">Book Seats</a>
+    <a href="{% url 'booking_history' %}">My Bookings</a>
+  </nav>
+
+  <div class="container">
+    <h2>My Booking History</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Booking ID</th><th>Route</th><th>Date</th><th>Seats</th><th>Amount (KES)</th><th>Status</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="bookingTable"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const bookingTable = document.getElementById("bookingTable");
+    const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+
+    if(bookings.length === 0){
+      bookingTable.innerHTML = `<tr><td colspan="7">No bookings found.</td></tr>`;
+    } else {
+      bookings.forEach((b,index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>#${b.id}</td>
+          <td>${b.route}</td>
+          <td>${b.date}</td>
+          <td>${b.seats.join(", ")}</td>
+          <td>${b.amount}</td>
+          <td><span class="status confirmed">${b.status}</span></td>
+          <td><button class="btn viewBtn" data-index="${index}">View</button></td>
+        `;
+        bookingTable.appendChild(row);
+      });
+
+      document.querySelectorAll(".viewBtn").forEach(btn => {
+          btn.addEventListener("click", e => {
+            const index = e.target.getAttribute("data-index");
+            localStorage.setItem("selectedBooking", index);
+            window.location.href = "{% url 'view_booking' %}";
+          });
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Seats</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .container { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 6px 12px rgba(0,0,0,0.2); text-align: center; width: 420px; }
+    h2 { margin-bottom: 20px; }
+    .seat-map { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px; }
+    .seat { background: #ddd; border-radius: 6px; padding: 15px; cursor: pointer; transition: background 0.3s; }
+    .seat.selected { background: #28a745; color: #fff; }
+    button { padding: 10px 15px; background: #007bff; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    #selectedSeats, #totalPrice { margin-top: 15px; font-weight: bold; color: #333; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Select Your Seats</h2>
+    <div class="seat-map">
+      <div class="seat">A1</div><div class="seat">A2</div><div class="seat">A3</div><div class="seat">A4</div><div class="seat">A5</div>
+      <div class="seat">B1</div><div class="seat">B2</div><div class="seat">B3</div><div class="seat">B4</div><div class="seat">B5</div>
+      <div class="seat">C1</div><div class="seat">C2</div><div class="seat">C3</div><div class="seat">C4</div><div class="seat">C5</div>
+    </div>
+    <button id="proceedBtn">Proceed to Payment</button>
+    <div id="selectedSeats">Selected Seats: None</div>
+    <div id="totalPrice">Total Price: KES 0</div>
+  </div>
+
+  <script>
+    const seats = document.querySelectorAll(".seat");
+    const selectedSeatsDisplay = document.getElementById("selectedSeats");
+    const totalPriceDisplay = document.getElementById("totalPrice");
+    const proceedBtn = document.getElementById("proceedBtn");
+    let selectedSeats = [];
+    const seatPrice = 1500;
+
+    seats.forEach(seat => {
+      seat.addEventListener("click", () => {
+        seat.classList.toggle("selected");
+        const seatNumber = seat.textContent;
+
+        if(seat.classList.contains("selected")) {
+          selectedSeats.push(seatNumber);
+        } else {
+          selectedSeats = selectedSeats.filter(s => s !== seatNumber);
+        }
+
+        selectedSeatsDisplay.textContent = 
+          selectedSeats.length > 0 
+          ? "Selected Seats: " + selectedSeats.join(", ") 
+          : "Selected Seats: None";
+
+        const total = selectedSeats.length * seatPrice;
+        totalPriceDisplay.textContent = "Total Price: KES " + total;
+      });
+    });
+
+    proceedBtn.addEventListener("click", () => {
+      if(selectedSeats.length === 0) {
+        alert("Please select at least one seat.");
+      } else {
+        const total = selectedSeats.length * seatPrice;
+        // Save to localStorage
+        localStorage.setItem("selectedSeats", JSON.stringify(selectedSeats));
+        localStorage.setItem("totalPrice", total);
+        window.location.href = "{% url 'payment' %}";
+      }
+    });
+  </script>
+</body>
+</html>

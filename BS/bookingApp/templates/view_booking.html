@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Booking</title>
+  <style>
+    body { font-family:'Segoe UI',sans-serif; background:linear-gradient(135deg,#6a11cb,#2575fc); margin:0; display:flex; justify-content:center; align-items:center; height:100vh; }
+    .card { background:#fff; padding:30px; border-radius:12px; width:400px; box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+    h2 { text-align:center; margin-bottom:20px; color:#333; }
+    .detail { margin:10px 0; font-size:1.1em; }
+    .label { font-weight:bold; color:#444; }
+    .status { display:inline-block; padding:6px 10px; border-radius:6px; font-weight:bold; color:#fff; }
+    .confirmed{background:#28a745;} .completed{background:#17a2b8;} .cancelled{background:#dc3545;}
+    .btn { display:block; margin-top:20px; padding:10px; background:#007bff; color:#fff; text-align:center; border-radius:6px; text-decoration:none; }
+    .btn:hover{background:#0056b3;}
+  </style>
+</head>
+<body>
+  <div class="card" id="bookingCard">
+    <h2>Booking Details</h2>
+    <!-- Booking details will be injected here -->
+    <a href="{% url 'booking_history' %}"></a>
+      <a href="{% url 'home' %}" class="btn">home</a>
+  </div>
+
+  <script>
+    const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    const index = localStorage.getItem("selectedBooking");
+    const card = document.getElementById("bookingCard");
+
+    if(index !== null && bookings[index]){
+      const b = bookings[index];
+      const details = `
+        <div class="detail"><span class="label">Booking ID:</span> #${b.id}</div>
+        <div class="detail"><span class="label">Route:</span> ${b.route}</div>
+        <div class="detail"><span class="label">Date:</span> ${b.date}</div>
+        <div class="detail"><span class="label">Seats:</span> ${b.seats.join(", ")}</div>
+        <div class="detail"><span class="label">Amount:</span> KES ${b.amount}</div>
+        <div class="detail"><span class="label">Status:</span> <span class="status confirmed">${b.status}</span></div>
+      `;
+      card.insertAdjacentHTML("afterbegin", details);
+    } else {
+      card.insertAdjacentHTML("afterbegin", `<p>No booking selected.</p>`);
+    }
+  </script>
+</body>
+</html>

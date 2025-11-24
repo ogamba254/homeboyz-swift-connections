@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+        <title>Homeboys Travellers</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'schedules' %}">Schedules</a>
+        <a href="{% url 'booking_history' %}">My Bookings</a>
+        <a href="{% url 'view_booking' %}">View Bookings</a>
+    <div class="container">
+            <h1>Welcome to Homeboys Travellers</h1>
+            <p>Book your bus tickets easily and securely with Homeboys Travellers.</p>
+        <a href="{% url 'schedules' %}" class="btn">Search Bus Schedules</a>
+    </div>
+</body>
+
+</html>

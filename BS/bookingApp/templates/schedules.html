@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bus Schedules</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <div class="container">
+    <h2>Search Bus Schedules</h2>
+    <form id="scheduleForm">
+      <label>From</label>
+      <input type="text" id="from" required>
+      <label>To</label>
+      <input type="text" id="to" required>
+      <label>Date</label>
+      <input type="date" id="date" required>
+      <button type="submit">Search</button><br>
+      <a href="{% url 'home' %}">back</a>
+    </form>
+    <hr>
+    <h3>Available Buses</h3>
+    <ul id="results"></ul>
+  </div>
+
+  <script>
+    document.getElementById("scheduleForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const from = document.getElementById("from").value;
+      const to = document.getElementById("to").value;
+      const date = document.getElementById("date").value;
+
+      const results = document.getElementById("results");
+      results.innerHTML = `<li>${from} → ${to} | ${date} | 9:00 AM | <a href="{% url 'seat_selection' %}">Select Seats</a></li>`;
+    });
+  </script>
+</body>
+</html>
